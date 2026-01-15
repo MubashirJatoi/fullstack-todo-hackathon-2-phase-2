@@ -143,4 +143,4 @@ The application follows a spec-driven development approach with complete separat
 To verify the user isolation works correctly:
 1. Create two user accounts (User A and User B)
 2. Create tasks for each user
-3. Verify that User A can only see their own tasks and not User B's tasks, and vice versa
+3. Verify that User A can only see their own tasks and not User B's tasks, and vice versa"# fullstack-todo-hackathon-2-phase-2" 
