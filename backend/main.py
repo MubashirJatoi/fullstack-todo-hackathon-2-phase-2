@@ -27,8 +27,7 @@ app = FastAPI(
     version="1.0.0",
     redoc_url="/redoc",
     docs_url="/docs",
-    openapi_url="/openapi.json",
-    redirect_slashes=False  # Disable to prevent POST redirect issues
+    openapi_url="/openapi.json"
 )
 
 # Add CORS middleware for production
@@ -49,6 +48,35 @@ app.add_middleware(
 # Include routers
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 app.include_router(tasks.router, prefix="/api/tasks", tags=["tasks"])
+
+# Handle both with and without trailing slash to avoid redirect issues for POST requests
+from fastapi import Depends, HTTPException, status
+import uuid
+from routes import tasks as tasks_router_module
+from auth import get_current_user_id
+from db import get_session
+from sqlmodel import Session
+
+# Directly implement the endpoints without redirects to preserve POST data
+@app.post("/api/tasks")
+def create_task_no_redirect(task_data: tasks_router_module.TaskCreate, current_user_id: uuid.UUID = Depends(get_current_user_id), session: Session = Depends(get_session)):
+    # Call the actual create_task function from the tasks router
+    return tasks_router_module.create_task(task_data, current_user_id, session)
+
+@app.get("/api/tasks")
+def get_tasks_no_redirect(
+    current_user_id: uuid.UUID = Depends(get_current_user_id),
+    session: Session = Depends(get_session),
+    search: str = None,
+    status: str = None,  # Changed from status_filter to match original
+    priority: str = None,
+    category: str = None,
+    sort: str = None
+):
+    # Call the actual get_tasks function from the tasks router
+    # We need to call it with the same parameters as the original function
+    from routes.tasks import get_tasks
+    return get_tasks(current_user_id=current_user_id, session=session, search=search, status=status, priority=priority, category=category, sort=sort)
 
 @app.get("/")
 def read_root():
