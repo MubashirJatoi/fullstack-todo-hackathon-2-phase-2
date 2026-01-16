@@ -37,22 +37,13 @@ DATABASE_URL = setup_ssl_verification(DATABASE_URL)
 
 # Create engine with connection pooling settings appropriate for async applications
 try:
-    # For Neon PostgreSQL, we may need different connection settings
-    engine_kwargs = {
-        "pool_size": 5,  # Base number of connections
-        "max_overflow": 10,  # Additional connections beyond pool_size
-        "pool_pre_ping": True,  # Verify connections before use
-        "pool_recycle": 300,  # Recycle connections after 5 minutes
-        "echo": True  # Enable SQL logging for debugging
-    }
-
-    # If using PostgreSQL (including Neon), add specific connection parameters
-    if DATABASE_URL.startswith("postgresql://") or DATABASE_URL.startswith("postgres://"):
-        engine_kwargs["pool_pre_reset_isolation_level"] = False
-
     engine = create_engine(
         DATABASE_URL,
-        **engine_kwargs
+        pool_size=5,  # Base number of connections
+        max_overflow=10,  # Additional connections beyond pool_size
+        pool_pre_ping=True,  # Verify connections before use
+        pool_recycle=300,  # Recycle connections after 5 minutes
+        echo=True  # Enable SQL logging for debugging
     )
     print(f"Database engine created with URL: {DATABASE_URL}")
 except Exception as e:

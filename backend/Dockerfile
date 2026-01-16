@@ -8,6 +8,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Expose port 8000 as default, but can be overridden
-EXPOSE 8000
+EXPOSE 7860
 
 CMD ["python", "main.py"]
