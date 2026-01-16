@@ -37,7 +37,8 @@ class ApiClient {
     // For production, ensure we're using the correct backend URL
     if (typeof window !== 'undefined') {
       // Client-side runtime check
-      if (window.location.hostname === 'frontend-xi-five-90.vercel.app') {
+      if (window.location.hostname === 'frontend-xi-five-90.vercel.app' ||
+          window.location.hostname === 'fullstack-todo-hackathon-2-phase-2.vercel.app') {
         baseURL = 'https://mubashirjatoi-todo-app-fullstack.hf.space';
       }
     }
