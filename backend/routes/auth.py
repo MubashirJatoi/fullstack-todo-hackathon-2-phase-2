@@ -5,7 +5,7 @@ from typing import Optional
 from datetime import timedelta
 from pydantic import BaseModel
 import uuid
-from auth import authenticate_user, create_access_token, get_password_hash
+from ..auth import authenticate_user, create_access_token, get_password_hash
 from models import User
 from db import get_session
 from datetime import datetime

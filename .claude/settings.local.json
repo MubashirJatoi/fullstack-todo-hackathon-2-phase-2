@@ -76,7 +76,10 @@
       "Bash(dir *.env*)",
       "Bash(powershell New-Item -Path \"D:\\\\CODE\\\\quarter 4\\\\hackathon\\\\hackathon 2\\\\phase 2\\\\hackathon-todo\\\\backend\\\\.env\" -ItemType File -Force)",
       "Bash(uvicorn main:app --reload)",
-      "Bash(dir \"D:\\\\CODE\\\\quarter 4\\\\hackathon\\\\hackathon 2\\\\phase 2\\\\hackathon-todo\\\\frontend\" /A-D)"
+      "Bash(dir \"D:\\\\CODE\\\\quarter 4\\\\hackathon\\\\hackathon 2\\\\phase 2\\\\hackathon-todo\\\\frontend\" /A-D)",
+      "Bash(dir D:CODEquarter 4hackathonhackathon 2phase 2hackathon-todobackend /s)",
+      "Bash(dir \"D:\\\\CODE\\\\quarter 4\\\\hackathon\\\\hackathon 2\\\\phase 2\\\\hackathon-todo\\\\backend\" /s)",
+      "Bash(tree \"D:\\\\CODE\\\\quarter 4\\\\hackathon\\\\hackathon 2\\\\phase 2\\\\hackathon-todo\\\\backend\")"
     ]
   }
 }
