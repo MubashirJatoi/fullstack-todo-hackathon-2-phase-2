@@ -3,7 +3,7 @@ from sqlmodel import Session, select
 from typing import List, Optional
 from pydantic import BaseModel
 import uuid
-from ..auth import get_current_user_id
+from auth import get_current_user_id
 from models import Task, User
 from db import get_session
 from datetime import datetime

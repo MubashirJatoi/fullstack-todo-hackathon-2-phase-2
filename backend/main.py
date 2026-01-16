@@ -1,11 +1,15 @@
+import sys
+import os
+# Add the current directory to the Python path to resolve imports properly
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from sqlmodel import Session
-import os
 
 from db import create_db_and_tables, get_session
-from routes import auth, tasks
+from routes import auth_routes as auth, tasks
 from models import User, Task
 
 

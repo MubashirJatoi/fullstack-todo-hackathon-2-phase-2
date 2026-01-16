@@ -79,7 +79,10 @@
       "Bash(dir \"D:\\\\CODE\\\\quarter 4\\\\hackathon\\\\hackathon 2\\\\phase 2\\\\hackathon-todo\\\\frontend\" /A-D)",
       "Bash(dir D:CODEquarter 4hackathonhackathon 2phase 2hackathon-todobackend /s)",
       "Bash(dir \"D:\\\\CODE\\\\quarter 4\\\\hackathon\\\\hackathon 2\\\\phase 2\\\\hackathon-todo\\\\backend\" /s)",
-      "Bash(tree \"D:\\\\CODE\\\\quarter 4\\\\hackathon\\\\hackathon 2\\\\phase 2\\\\hackathon-todo\\\\backend\")"
+      "Bash(tree \"D:\\\\CODE\\\\quarter 4\\\\hackathon\\\\hackathon 2\\\\phase 2\\\\hackathon-todo\\\\backend\")",
+      "Bash(del \"D:\\\\CODE\\\\quarter 4\\\\hackathon\\\\hackathon 2\\\\phase 2\\\\hackathon-todo\\\\backend\\\\__init__.py\")",
+      "Bash(ren \"D:\\\\CODE\\\\quarter 4\\\\hackathon\\\\hackathon 2\\\\phase 2\\\\hackathon-todo\\\\backend\\\\routes\\\\auth.py\" \"auth_routes.py\")",
+      "Bash(del \"D:\\\\CODE\\\\quarter 4\\\\hackathon\\\\hackathon 2\\\\phase 2\\\\hackathon-todo\\\\backend\\\\routes\\\\auth.py\")"
     ]
   }
 }
