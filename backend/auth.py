@@ -60,8 +60,6 @@ class TokenData(BaseModel):
     username: Optional[str] = None
 
 
-
-
 def get_password_hash(password: str) -> str:
     """Hash a password."""
     return hash_password(password)
@@ -101,10 +99,10 @@ def get_current_user_from_token(token: str) -> Optional[TokenData]:
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
-        if username is None:
+        user_id: str = payload.get("sub")  # Changed from username to user_id
+        if user_id is None:
             raise credentials_exception
-        token_data = TokenData(username=username)
+        token_data = TokenData(username=user_id)
     except JWTError:
         raise credentials_exception
     return token_data
@@ -112,25 +110,35 @@ def get_current_user_from_token(token: str) -> Optional[TokenData]:
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> str:
     """Dependency to get the current user from the JWT token."""
-    token = credentials.credentials
-    token_data = get_current_user_from_token(token)
-    if token_data is None:
+    try:
+        token = credentials.credentials
+        token_data = get_current_user_from_token(token)
+        if token_data is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Could not validate credentials",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
+        return token_data.username
+    except HTTPException:
+        raise
+    except Exception:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    return token_data.username
+
 
 async def get_current_user_id(credentials: HTTPAuthorizationCredentials = Depends(security)) -> uuid.UUID:
     """Dependency to get the current user ID from the JWT token."""
-    token = credentials.credentials
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
     try:
+        token = credentials.credentials
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         user_id: str = payload.get("sub")
         if user_id is None:

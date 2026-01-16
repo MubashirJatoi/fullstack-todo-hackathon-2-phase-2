@@ -21,7 +21,14 @@ async def lifespan(app: FastAPI):
 
 
 # Create FastAPI app with lifespan
-app = FastAPI(lifespan=lifespan, title="Todo API", version="1.0.0")
+app = FastAPI(
+    lifespan=lifespan,
+    title="Todo API",
+    version="1.0.0",
+    redoc_url="/redoc",
+    docs_url="/docs",
+    openapi_url="/openapi.json"
+)
 
 # Add CORS middleware for production
 app.add_middleware(

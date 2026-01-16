@@ -1,6 +1,6 @@
 from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional, TYPE_CHECKING
-from datetime import datetime
+from datetime import datetime, date
 import uuid
 
 if TYPE_CHECKING:
@@ -30,7 +30,7 @@ class Task(SQLModel, table=True):
     completed: bool = Field(default=False)
     priority: str = Field(default="medium", max_length=20)  # low, medium, high
     category: Optional[str] = Field(default=None, max_length=100)
-    due_date: Optional[datetime] = Field(default=None)
+    due_date: Optional[date] = Field(default=None)
     recurrence_pattern: Optional[str] = Field(default=None, max_length=50)
     user_id: uuid.UUID = Field(foreign_key="users.id", nullable=False)
     created_at: datetime = Field(default_factory=datetime.utcnow, nullable=False)

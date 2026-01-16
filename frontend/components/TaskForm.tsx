@@ -34,16 +34,8 @@ export default function TaskForm({ onTaskCreated, onCancel, initialTask }: TaskF
       // Format the due date properly for the backend
       let formattedDueDate: string | undefined = undefined;
       if (dueDate && typeof dueDate === 'string' && dueDate.trim() !== '') {
-        // Ensure the date is in ISO format that the backend expects
-        try {
-          const dateObj = new Date(dueDate);
-          if (!isNaN(dateObj.getTime())) {
-            // Format to ISO string format that the backend expects
-            formattedDueDate = dateObj.toISOString();
-          }
-        } catch {
-          // If date parsing fails, don't set the due date
-        }
+        // Ensure the date is in YYYY-MM-DD format that the backend expects
+        formattedDueDate = dueDate; // Date input already returns YYYY-MM-DD format
       }
 
       if (initialTask) {
@@ -163,7 +155,7 @@ export default function TaskForm({ onTaskCreated, onCancel, initialTask }: TaskF
               Due Date (optional)
             </label>
             <input
-              type="datetime-local"
+              type="date"
               id="dueDate"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}

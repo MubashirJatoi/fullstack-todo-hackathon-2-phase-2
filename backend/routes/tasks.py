@@ -6,7 +6,7 @@ import uuid
 from auth import get_current_user_id
 from models import Task, User
 from db import get_session
-from datetime import datetime
+from datetime import datetime, date
 from services.task_service import (
     get_tasks_by_user,
     create_task_for_user,
@@ -25,7 +25,7 @@ class TaskCreate(BaseModel):
     title: str
     description: str = ""
     priority: str = "medium"  # low, medium, high
-    category: str = ""
+    category: Optional[str] = None  # Changed to optional to handle NULL values
     due_date: Optional[str] = None
     recurrence_pattern: Optional[str] = None
 
@@ -35,7 +35,7 @@ class TaskUpdate(BaseModel):
     description: str = None
     completed: bool = None
     priority: str = None
-    category: str = None
+    category: Optional[str] = None  # Changed to optional to handle NULL values
     due_date: Optional[str] = None
     recurrence_pattern: Optional[str] = None
 
@@ -50,8 +50,8 @@ class TaskResponse(BaseModel):
     description: str
     completed: bool
     priority: str
-    category: str
-    due_date: Optional[datetime] = None
+    category: Optional[str] = None  # Changed to optional to handle NULL values
+    due_date: Optional[date] = None
     recurrence_pattern: Optional[str] = None
     user_id: uuid.UUID
     created_at: datetime

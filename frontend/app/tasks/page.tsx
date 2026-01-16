@@ -65,7 +65,7 @@ export default function TasksPage() {
       if (loadTasksRef.current) {
         loadTasksRef.current();
       }
-    }, 300); // 300ms delay
+    }, 150); // Reduced delay to 150ms for faster response
   }, []);
 
   const handleTaskCreated = (newTask: Task) => {
@@ -103,7 +103,7 @@ export default function TasksPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 py-4 sm:py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white shadow-xl rounded-2xl overflow-hidden">
           <div className="px-6 py-6 border-b border-gray-200 bg-gradient-to-r from-indigo-500 to-purple-600">
@@ -127,18 +127,18 @@ export default function TasksPage() {
                   />
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row flex-wrap gap-2">
                   <select
                     value={statusFilter}
                     onChange={(e) => {
                       setStatusFilter(e.target.value as 'all' | 'pending' | 'completed');
                       debouncedLoadTasks();
                     }}
-                    className="px-3 py-2 rounded-lg text-gray-900 bg-white bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-white"
+                    className="px-3 py-2 rounded-lg text-gray-900 bg-white bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-white text-sm min-w-[110px]"
                   >
-                    <option value="all">All Status</option>
+                    <option value="all">Status</option>
                     <option value="pending">Pending</option>
-                    <option value="completed">Completed</option>
+                    <option value="completed">Done</option>
                   </select>
 
                   <select
@@ -147,11 +147,11 @@ export default function TasksPage() {
                       setPriorityFilter(e.target.value as 'all' | 'low' | 'medium' | 'high');
                       debouncedLoadTasks();
                     }}
-                    className="px-3 py-2 rounded-lg text-gray-900 bg-white bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-white"
+                    className="px-3 py-2 rounded-lg text-gray-900 bg-white bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-white text-sm min-w-[110px]"
                   >
-                    <option value="all">All Priorities</option>
+                    <option value="all">Priority</option>
                     <option value="high">High</option>
-                    <option value="medium">Medium</option>
+                    <option value="medium">Med</option>
                     <option value="low">Low</option>
                   </select>
 
@@ -161,12 +161,12 @@ export default function TasksPage() {
                       setSortBy(e.target.value as 'created' | 'title' | 'priority' | 'due_date');
                       debouncedLoadTasks();
                     }}
-                    className="px-3 py-2 rounded-lg text-gray-900 bg-white bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-white"
+                    className="px-3 py-2 rounded-lg text-gray-900 bg-white bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-white text-sm min-w-[130px]"
                   >
-                    <option value="created">Sort by Created</option>
-                    <option value="title">Sort by Title</option>
-                    <option value="priority">Sort by Priority</option>
-                    <option value="due_date">Sort by Due Date</option>
+                    <option value="created">Sort: Created</option>
+                    <option value="title">Sort: Title</option>
+                    <option value="priority">Sort: Priority</option>
+                    <option value="due_date">Sort: Due</option>
                   </select>
                 </div>
 

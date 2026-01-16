@@ -2,7 +2,7 @@ from sqlmodel import Session, select
 from typing import List, Optional
 import uuid
 from models import Task, User
-from datetime import datetime
+from datetime import datetime, date
 
 
 def get_tasks_by_user(session: Session, user_id: uuid.UUID) -> List[Task]:
@@ -13,7 +13,7 @@ def get_tasks_by_user(session: Session, user_id: uuid.UUID) -> List[Task]:
 
 def create_task_for_user(session: Session, user_id: uuid.UUID, title: str, description: str = "", priority: str = "medium", category: str = "", due_date_str: str = None, recurrence_pattern: str = None) -> Task:
     """Create a new task for a specific user."""
-    from datetime import datetime
+    from datetime import datetime, date
     import uuid
 
     # Parse due_date if provided
@@ -21,7 +21,9 @@ def create_task_for_user(session: Session, user_id: uuid.UUID, title: str, descr
     if due_date_str:
         try:
             from dateutil.parser import parse
-            due_date = parse(due_date_str)
+            parsed_date = parse(due_date_str)
+            # Convert to date only (year-month-day)
+            due_date = parsed_date.date()
         except:
             due_date = None  # If parsing fails, set to None
 
@@ -29,7 +31,7 @@ def create_task_for_user(session: Session, user_id: uuid.UUID, title: str, descr
         title=title,
         description=description,
         priority=priority,
-        category=category if category else None,
+        category=category if (category and category.strip()) else None,
         due_date=due_date,
         recurrence_pattern=recurrence_pattern,
         user_id=user_id,
@@ -71,11 +73,13 @@ def update_task_for_user(session: Session, task_id: uuid.UUID, user_id: uuid.UUI
     if priority is not None:
         task.priority = priority
     if category is not None:
-        task.category = category if category else None
+        task.category = category if (category and category.strip()) else None
     if due_date is not None:
         from dateutil.parser import parse
         try:
-            task.due_date = parse(due_date)
+            parsed_date = parse(due_date)
+            # Convert to date only (year-month-day)
+            task.due_date = parsed_date.date()
         except:
             pass  # If parsing fails, don't update due_date
     if recurrence_pattern is not None:
