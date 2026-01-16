@@ -98,11 +98,12 @@ def register(user_data: UserCreate, session: Session = Depends(get_session)):
 def login(user_data: UserLogin, session: Session = Depends(get_session)):
     """Authenticate user and return JWT token."""
     # Check password length to comply with bcrypt limitation (72 bytes)
-    if len(user_data.password.encode('utf-8')) > 72:
+    password = user_data.password
+    if len(password.encode('utf-8')) > 72:
         # Truncate password to first 72 characters for comparison
-        user_data.password = user_data.password[:72]
+        password = password[:72]
 
-    user = authenticate_user(session, user_data.email, user_data.password)
+    user = authenticate_user(session, user_data.email, password)
 
     if not user:
         raise HTTPException(

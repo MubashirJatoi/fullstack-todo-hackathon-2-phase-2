@@ -19,10 +19,15 @@ async def lifespan(app: FastAPI):
 # Create FastAPI app with lifespan
 app = FastAPI(lifespan=lifespan, title="Todo API", version="1.0.0")
 
-# Add CORS middleware for development
+# Add CORS middleware for production
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, replace with specific origins
+    allow_origins=[
+        "https://frontend-xi-five-90.vercel.app",  # Deployed frontend
+        "http://localhost:3000",  # Local frontend development
+        "http://localhost:8000",  # Local backend for testing
+        "https://mubashirjatoi-todo-app-fullstack.hf.space"  # Hugging Face deployment
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

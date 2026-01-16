@@ -31,8 +31,21 @@ class ApiClient {
   private refreshTokenPromise: Promise<string> | null = null;
 
   constructor() {
+    // Ensure the base URL is properly formed
+    let baseURL = process.env.NEXT_PUBLIC_API_URL || 'https://mubashirjatoi-todo-app-fullstack.hf.space';
+
+    // For production, ensure we're using the correct backend URL
+    if (typeof window !== 'undefined') {
+      // Client-side runtime check
+      if (window.location.hostname === 'frontend-xi-five-90.vercel.app') {
+        baseURL = 'https://mubashirjatoi-todo-app-fullstack.hf.space';
+      }
+    }
+
+    console.log('API Base URL:', baseURL); // Debug logging
+
     this.client = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
+      baseURL: baseURL,
       timeout: 10000,
     });
 
